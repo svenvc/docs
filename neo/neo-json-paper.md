@@ -1,0 +1,198 @@
+# JSON
+
+*Sven Van Caekenberghe*
+
+*June 2012*
+
+*(This is a draft)*
+
+
+JSON (JavaScript Object Notation) is a popular data-interchange format.
+NeoJSON is an elegant and efficient standalone Smalltalk framework to 
+read and write JSON converting to or from Smalltalk objects.   
+
+
+## An introduction to JSON
+
+
+JSON is a lightweight text-based open standard designed for human-readable data interchange. 
+It was derived from the JavaScript scripting language for representing simple data structures and associative arrays, called objects. 
+Despite its relationship to JavaScript, it is language-independent, with parsers available for many languages.
+
+Here are some relevant links:
+
+- <http://www.json.org/>
+- <http://en.wikipedia.org/wiki/Json>
+- <http://www.ietf.org/rfc/rfc4627.txt?number=4627>
+
+There are only a couple of primitive types in JSON:
+
+- numbers (integer or floating point)
+- strings
+- the boolean constants true and false
+- null
+
+Only two composite types exist:
+
+- lists (an ordered sequenece of values)
+- maps (an unordered associative array, mapping string property names to values)
+
+That is really all there is to it. No options or additions are defined in the standard.
+
+
+## NeoJSON
+
+
+The NeoJSON framework contains a reader (NeoJSONReader) and a writer (NeoJSONWriter)
+to parse respectively generate JSON to or from Smalltalk objects.
+The goals of this project are:
+
+- to be standalone (have no dependencies and have little requirements)
+- to be small, elegant and understandable
+- to be efficient (both in time and space)
+- to be flexible and non-intrusive
+
+Compared to other Smalltalk JSON frameworks, NeoJSON has
+
+- less dependencies and little requirements
+- can be more efficient (be faster and use less memory)
+- allows for the use of schemas and mappings
+
+
+## Primitives
+
+Obviously, the primitive types are mapped to corresponding Smalltalk classes.
+While reading:
+
+- numbers become Integers or Floats
+- strings become Strings
+- booleans become Booleans
+- null become nil
+
+While writing
+
+- Numbers are converted to floats, except for Integers that become integers
+- Strings and subclasses become strings
+- Booleans become booleans
+- nil becomes null
+
+
+## Generic Mode
+
+
+NeoJSON can operate in a generic mode that requires no further configuration.
+While reading:
+
+- maps become instances of mapClass, Dictionary by default
+- lists become instance of listClass, Array by default
+
+The reader can be customized to use a different mapClass or listClass.
+There is also an option to convert all map keys to symbols, which is off by default.
+While writing:
+
+- Dictionary and SmallDictionary become maps
+- all other Collection classes become lists
+- all other Objects are rejected
+
+Here are some examples writing in generic mode:
+
+	NeoJSONWriter toString: #(1 2 3).
+	
+	NeoJSONWriter toString: { Float pi. true. false. 'string' }.
+	
+	NeoJSONWriter toStringPretty: (Dictionary new at: #x put: 1; at: #y put: 2; yourself).
+
+NeoJSONWriter can output either in a compact format (the default) or in a pretty printed format.
+And these are some examples reading in generic mode:
+
+	NeoJSONReader fromString: ' [ 1,2,3 ] '.
+
+	NeoJSONReader fromString: ' [ 3.14159, true, false, null, "string" ] '.
+
+	NeoJSONReader fromString: ' { "x" : 1, "y" : 2 } '.
+
+
+In order to use the generic mode, you have to convert your domain objects to and from
+Dictionaries and SequenceableCollections. This is realatively easy but not very efficient,
+depending on the use case.
+
+
+## Schemas and Mappings
+
+
+NeoJSON allows for the optional specification of schemas and mappings to be used
+when writing and/or when reading.
+A NeoJSONMapper holds a number of schemas.
+Each schema is identified by either a class or a symbol.
+Each schema specifies a mapping, an object that will help in doing the actual reading or writing.
+
+The most common mapping deals with objects that define a number of named properties or attributes.
+These can be defined based on instance variables (optionally derived by reflection), 
+accessors (getter/setter pairs) or even blocks.
+Such an object mapping is identified by a Smalltalk class, which is also used to create new instances.
+Each property mapping can have an optional value schema to be used recursively
+when reading and/or writing property values.
+
+The less common custom mapping holds a generic reader and/or writer block to deal with 
+special cases such as specific collection types with an optional schema for the elements, 
+or a direct mapping of semi primitive types such as Date or DateAndTime.
+
+A mapping can be specified explicitely on a mapper, or can be resolved using the #neoJsonMapping: class method.
+
+Here are some examples of mappings:
+
+	mapper mapAllInstVarsFor: Point.
+
+	mapper for: TestObject do: [ :mapping |
+		mapping mapInstVars: #(id name).
+		(mapping mapInstVar: #timestamp to: 'created-at') valueSchema: DateAndTime.
+		(mapping mapInstVar: #points) valueSchema: #ArrayOfPoints.
+		(mapping mapInstVar: #bytes) valueSchema: ByteArray ].
+
+	mapper for: DateAndTime customDo: [ :mapping |
+		mapping decoder: [ :string | DateAndTime fromString: string ].
+		mapping encoder: [ :dateAndTime | dateAndTime printString ] ].
+
+	mapper for: #ArrayOfPoints customDo: [ :mapping |
+		mapping listOfElementSchema: Point ].  
+
+	mapper for: ByteArray customDo: [ :mapping |
+		mapping listOfType: ByteArray ]
+
+The classes NeoJSONReader and NeoJSONWriter are subclasses of NeoJSONMapper.
+When writing, mappings are used when arbitrary objects are seen.
+For example, in order to be able to write an array of points, you could do as follows:
+
+	String streamContents: [ :stream |
+		(NeoJSONWriter on: stream)
+			prettyPrint: true;
+			mapInstVarsFor: Point;
+			nextPut: (Array with: 1@3 with: -1@3) ].
+
+Collections are handled automatically, like in the generic case.
+When reading, a mapping is used as a binding or an explicit type specifying what Smalltalk objects that you want to read.
+Here is a very simple case, reading a map as a point:
+
+	(NeoJSONReader on: ' { "x" : 1, "y" : 2 } ' readStream)
+		mapInstVarsFor: Point;
+		nextAs: Point.	
+
+Since JSON lacks a universal way to specify the class of an object/map, 
+we have to specify the target schema that we want to use as an argument to #nextAs:.
+Finally, here is a more complex example, reading a list of maps as an array of points:
+
+	(NeoJSONReader on: '[ { "x" : 1, "y" : 2 }, { "x" : 3, "y" : 4 } ]' readStream)
+		mapInstVarsFor: Point;
+		for: #ArrayOfPoints customDo: [ :mapping |
+			mapping listOfElementSchema: Point ];
+		nextAs: #ArrayOfPoints.
+
+NeoJSON deals efficiently with mappings: the minimal amount of intermediary structures are created,
+which is quite different from the generic case.
+
+
+## Internals
+
+
+On modern hardware, NeoJSON can write or read in the tens of thousands of small objects per second.
+Several benchmarks are included in the unit tests package.

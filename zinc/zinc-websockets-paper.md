@@ -297,7 +297,7 @@ Here is code to setup all examples:
       map: 'ws-status-client' 
       to: [ :request | ZnResponse ok: (ZnEntity html: ZnWebSocketStatusHandler clientHtml) ];
       map: 'ws-status'
-      to: (ZnWebSocketDelegate map: 'ws-chatroom' to: ZnWebSocketStatusHandler new).
+      to: (ZnWebSocketDelegate map: 'ws-status' to: ZnWebSocketStatusHandler new).
 
 Vist any of the following URLs:
 

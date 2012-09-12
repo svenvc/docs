@@ -19,15 +19,15 @@ WebSocket represents the next evolutionary step in web communication compared to
 HTTP, one of the main technologies of the internet, 
 defines a communication protocol between a client and a server
 where the initiative of the communication lies with the client 
-and each interaction consists of a client request and a server repsonse.
-When correctly implemented and used, HTTP is enormeously scaleable and very flexible.
+and each interaction consists of a client request and a server response.
+When correctly implemented and used, HTTP is enormously scaleable and very flexible.
 
-With the arrival of advanved Web applications mimicing regular 
+With the arrival of advanced Web applications mimicking regular 
 desktop applications with rich user interfaces, as well as mobile Web applications,
 it became clear that HTTP was not suitable or not a great fit for two use cases:
 
 - when the server wants to take the initiative and send the client a message
-- when the client wants to send (many) (possibly asynchroneous) short messages with little overhead 
+- when the client wants to send (many) (possibly asynchronous) short messages with little overhead 
 
 In the HTTP protocol, the server cannot take the initiative to send a message, 
 the only workaround is for the client to do some form of polling.
@@ -37,9 +37,9 @@ Previously, Comet and Ajax were used as (partial) solutions to these use cases.
 
 The WebSocket protocol defines a reliable communication channel between two equal parties, 
 typically, but not necessarily, a Web client and a Web server,
-over which asynchroneous messages can be send with very little overhead.
+over which asynchronous messages can be send with very little overhead.
 Messages can be any String or ByteArray. Overhead is just a couple of bytes.
-There is no such thing as a direct reply or a synchroneous confirmation.
+There is no such thing as a direct reply or a synchronous confirmation.
 
 Using WebSockets, a server can notify a client instantly of interesting events, 
 and clients can quickly send small notifications to a server, possibly multiplexing
@@ -49,9 +49,9 @@ many virtual communications channels over a single network socket.
 ## The WebSocket Protocol
 
 
-Zinc WebSockets implements <http://tools.ietf.org/html/rfc6455>, 
+Zinc WebSockets implements RFC 6455 <http://tools.ietf.org/html/rfc6455>, 
 not any of the previous development versions.
-For an introduction both <http://en.wikipedia.org/wiki/WebSocket> and
+For an introduction to, both <http://en.wikipedia.org/wiki/WebSocket> and
 <http://www.websocket.org> are good starting points.
 
 As a protocol, WebSocket starts with an initial setup handshake that is based on HTTP.
@@ -60,7 +60,7 @@ who is sending a so called connection upgrade request.
 The upgrade request contains a couple of special HTTP headers.
 The server begins as a regular HTTP server accepting the connection upgrade request.
 When the request is conform the specifications, 
-a regular 101 switching protocols response is sent.
+a 101 switching protocols response is sent.
 This response also contains a couple of special HTTP headers.
 From that point on, the HTTP conversation over the network socket stops 
 and the WebSocket protocol begins.
@@ -92,15 +92,15 @@ The host:port and path specification should be familiar.
 Zinc WebSockets supports the usage of client side WebSockets of both the regular 
 and secure variants (the secure variant requires Zodiac TLS/SSL). 
 The API is really simple, once you open the socket, 
-you use #sendMessge: and #readMessage: and finally #close. 
+you use #sendMessage: and #readMessage: and finally #close. 
 
 Here is a client side example taking to a public echo service: 
 
     | webSocket |
     webSocket := ZnWebSocket to: 'ws://echo.websocket.org'.
     [ webSocket 
-      sendMessage: 'Pharo Smalltalk using Zinc WebSockets !';
-      readMessage ] ensure: [ webSocket close ].
+        sendMessage: 'Pharo Smalltalk using Zinc WebSockets !';
+        readMessage ] ensure: [ webSocket close ].
 
 Note that #readMessage: is blocking. 
 It always returns a complete String or ByteArray, possible assembled out of multiple frames.
@@ -109,6 +109,7 @@ Reading and sending are completely separate and independent.
 
 For sending very large messages, there are #sendTextFrames: and #sendByteFrames: that take
 a collection of Strings or ByteArrays to be sent as different frames of the same message.
+At the other end, these will be joined together and seen as a single message.
 
 In any non-trivial application, you will have to add your own encoding and decoding to messages.
 In many cases, JSON will be the obvious choice as the client end is often JavaScript.
@@ -119,8 +120,8 @@ To use secure web sockets, just use the proper URL scheme wss:// as in the follo
     | webSocket |
     webSocket := ZnWebSocket to: 'wss://echo.websocket.org'.
     [ webSocket 
-      sendMessage: 'Pharo Smalltalk using Zinc WebSockets & Zodiac !';
-      readMessage ] ensure: [ webSocket close ].
+        sendMessage: 'Pharo Smalltalk using Zinc WebSockets & Zodiac !';
+        readMessage ] ensure: [ webSocket close ].
 
 Of course, your image has to contain Zodiac and your VM needs access to the proper plugin.
 That should not be a problem with the lastest Pharo 1.4 and 2.0 releases.
@@ -129,8 +130,8 @@ That should not be a problem with the lastest Pharo 1.4 and 2.0 releases.
 ## Using Server Side WebSockets
 
 
-Since the WebSocket protocol starts of as HTTP, 
-it is logical that a ZnServer delegate is the starting point.
+Since the WebSocket protocol starts off as HTTP, 
+it is logical that a ZnServer with a special delegate is the starting point.
 ZnWebSocketDelegate implements the standard #handleRequest: 
 to check if the incoming request is a valid WebSocket connection upgrade request.
 If so, the matching 101 switching protocols response is constructed and sent.
@@ -143,7 +144,7 @@ The required handler is any object implementing #value:
 with the new web socket as argument.
 
 Let's implement the echo service that we connected to as a client in the previous subsection.
-In essense, we should go in a loop, reading a message and sending it back.
+In essence, we should go in a loop, reading a message and sending it back.
 Here is the code:
 
     ZnServer startDefaultOn: 1701.
@@ -154,16 +155,16 @@ Here is the code:
           webSocket sendMessage: message ] repeat ]).
 
 We start a default server on port 1701 and replace its delegate with a ZnWebSocketDelegate.
-The ZnWebSocketDelegate will pass each correct web socket request on / to its handler.
+The ZnWebSocketDelegate will pass each correct web socket request on to its handler.
 In this example, a block is used as handler.
-The handler is given an instanciated, connected ZnWebSocket instance.
+The handler is given a new connected ZnWebSocket instance.
 For the echo service, we go into a repeat loop, reading a message and sending it back.
 
 Finally, you can stop the server using
 
     ZnServer stopDefault.
 
-Although the code above works it will eventually encounter two NetworkErrors:
+Although the code above works, it will eventually encounter two NetworkErrors:
 
 - ConnectionTimedOut
 - ConnectionClosed (or its more specific subclass ZnWebSocketClosed)
@@ -175,7 +176,7 @@ essentially ignoring the timeout for an infinite wait on incoming messages.
 
 This behavior is implemented in the ZnWebSocket>>#runWith: convenience method:
 it enters a loop reading messages and passing them to a block,
-continuing on timeouts. This simplifies the examples:
+continuing on timeouts. This simplifies our example:
 
     ZnServer startDefaultOn: 1701.
     ZnServer default delegate: (ZnWebSocketDelegate handler:
@@ -185,7 +186,7 @@ continuing on timeouts. This simplifies the examples:
           webSocket sendMessage: message ] ]).
 
 That leaves us with the problem of ConnectionClosed. 
-This exception can occur at the lowest level when the underlying network connection closes,
+This exception can occur at the lowest level when the underlying network connection closes unexpectedly,
 or at the WebSocket protocol level when the other end sends a close frame.
 In either case we have to deal with it as a server.
 In our trivial echo example, we can catch and ignore any ConnectionClosed exception.
@@ -206,13 +207,13 @@ helps to quickly set up a server implementing a WebSocket service.
 Don't forget to inspect the above code so that you have a reference to the server to close it,
 as this will not be the default server.
 
-Although using a block as handler is convenient, for non-trivial examples, 
+Although using a block as handler is convenient, for non-trivial examples 
 a regular object implementing #value: will probably be better.
 You can find such an implementation in ZnWebSocketEchoHandler.
 
 The current process (thread) as spawned by the server can be used freely by the handler code,
 for as long as the web socket connection lasts.
-The responsability for closing the connection lies with the handler,
+The responsibility for closing the connection lies with the handler,
 although a close from the other side will be handled correctly.
 
 To test our echo service, you could connect to it using a client side web socket,
@@ -220,7 +221,7 @@ like we did in the previous subsection. This is what the unit test ZnWebSocketTe
 Another solution is to run some JavaScript code in a web browser.
 You can find the necessary HTML page containing JavaScript code invoking the echo service on
 the class side of ZnWebSocketEchoHandler. 
-The following setup will serves this code:
+The following setup will serve this code:
 
     ZnServer startDefaultOn: 1701.
     ZnServer default logToTranscript.
@@ -235,7 +236,7 @@ The following setup will serves this code:
 Now, you can try the following URLs:
 
 - <http://localhost:1701/ws-echo-client-remote>
-- <http://localhost:1701/ws-echo-client-remote>
+- <http://localhost:1701/ws-echo-client>
 
 The first one will connect to ws://echo.websocket.org as a reference,
 the second one will connect to our implementation at ws://localhost:1701/ws-echo.
@@ -272,7 +273,7 @@ Here is the core loop:
           self crLog: 'Connection close, cleaning up'.
           self unregister: webSocket ]
 
-Distrubuting the message is as simple as (ignoring some details):
+Distributing the message is as simple as iterating over each client (ignoring some details):
 
     ZnWebSocketChatroomHandler>>distributeMessage: message
       clientWebSockets do: [ :each |
@@ -318,15 +319,15 @@ The wire level protocol, the encoding and decoding of frames can be found in ZnW
 The key methods are #writeOn: and #readFrom: as well as the instance creation protocol.
 Together with the testing protocol and #printOn: these should give enough information to understand the implementation.
 
-ZnWebSocket implements the protocol above that, either from a server or a client prespective.
+ZnWebSocket implements the protocol above frames, either from a server or a client perspective.
+The key methods are #readMessage and #readFrame, sending is quite simple.
 Client side setup can be found on the class side of ZnWebSocket.
 Server side handling of the setup is implemented in ZnWebSocketDelegate.
-The key methods are #readMessage and #readFrame, sending is quite simple.
 
 Two exceptions, ZnWebSocketFailed and ZnWebSocketClosed 
 and a shared ZnWebSocketUtils class round out the core code.
 
 
-The implementation of Zinc WebSockets as an addon to Zinc HTTP Components
-was made possibe in part through financial backing by Andy Burnett of 
+The implementation of Zinc WebSockets as an add-on to Zinc HTTP Components
+was made possible in part through financial backing by Andy Burnett of 
 [Knowinnovation Inc.](http://www.knowinnovation.com) and [ESUG](http://www.esug.org).

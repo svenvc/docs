@@ -174,7 +174,7 @@ which will be signalled with a ConnectionTimedOut exception.
 In most applications, you should just keep on reading,
 essentially ignoring the timeout for an infinite wait on incoming messages.
 
-This behavior is implemented in the ZnWebSocket>>#runWith: convenience method:
+This behaviour is implemented in the ZnWebSocket>>#runWith: convenience method:
 it enters a loop reading messages and passing them to a block,
 continuing on timeouts. This simplifies our example:
 

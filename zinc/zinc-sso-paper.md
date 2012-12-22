@@ -6,10 +6,8 @@
 
 *(This is a draft)*
 
+** OAuth
 
 See also [http://en.wikipedia.org/wiki/Oauth]
-
-
-## An Introduction to Authentication
 
 Lots more to understand and explain ;-)

@@ -24,17 +24,17 @@ Zinc-SSO depends on Zinc-HTTP-Components and Zodiac and uses NeoJSON as well.
 This is a Gofer load script for Pharo 2.0:
 
     Gofer it
-      repository: 'http://mc.stfx.eu/Neo';
-      package: 'NeoJSON';
+      url: 'http://mc.stfx.eu/Neo';
+      package: 'Neo-JSON-Core';
       load.
 
     Gofer it
-      repository: 'http://mc.stfx.eu/Zodiac';
+      url: 'http://mc.stfx.eu/Zodiac';
       package: 'Zodiac-Core';
       load.
 
     Gofer it
-      repository: 'http://mc.stfx.eu/ZincHTTPComponents';
+      url: 'http://mc.stfx.eu/ZincHTTPComponents';
       package: 'Zinc-FileSystem';
       package: 'Zinc-Character-Encoding';
       package: 'Zinc-Resource-Meta';

@@ -51,12 +51,14 @@ There are demos available for Google, Microsoft and Facebook accounts.
 
 ## Demos
 
-Setting up OAuth takes some work, which why two online demos are provided:
+Setting up OAuth takes some work, which why two online demos are available:
 
 - [http://sso.stfx.eu] (http://sso.stfx.eu)
 - [http://sso.doit.st] (http://sso.doit.st)
 
-The first demo is running on top of Zinc only, the second demo uses Seaside.
+The first demo is running on top of Zinc only, 
+the second demo uses Seaside for its user interface.
+Both use the same Zinc-SSO-OAuth-Core code.
 
 ## Getting Started
 
@@ -85,7 +87,7 @@ The ZnOAuth2Session does two things:
 
 If all goes well, the callback will contain enough information, called user data,
 for you to accept that the user holds that account. 
-You can trust that the service provider accepted the login.
+You can trust that the service provider did its normal work to authenticate the login.
 
 ***
 

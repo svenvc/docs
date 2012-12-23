@@ -29,7 +29,7 @@ See also [http://en.wikipedia.org/wiki/Oauth](http://en.wikipedia.org/wiki/Oauth
 ## Installation
 
 Zinc-SSO depends on [Zinc HTTP Components](http://zn.stfx.eu) and 
-[Zodiac](http://zdc.stfx.eu) and uses [NeoJSON](http://stfx.eu/NeoJSON) as well. 
+[Zodiac](http://zdc.stfx.eu) and uses [NeoJSON](http://stfx.eu/neojson) as well. 
 This is a Gofer load script for [Pharo 2.0](http://www.pharo.st):
 
     Gofer it

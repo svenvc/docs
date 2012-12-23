@@ -6,11 +6,19 @@
 
 *(This is a draft)*
 
-Zinc SSO is a library/framework to enable web applications to delegate
-authentication to often well-known external service providers.
+Zinc SSO is a library/framework providing tools in the realm of authorization and authentication,
+more specifically offering implementations of client side OAuth & OpenID.
+
+OAuth allows (web) applications to access resources on behalf of resource owners (typically users).
+At the same time, OAuth allows resource owners to grant access to their resources
+without actually sharing their credentials (typically username/password).
+
+A common use case is to use OAuth to enable web applications to delegate
+authentication to (often well-known) external service providers.
 Your users will be happy because they can reuse their existing account,
 you will be happy because you have less to implement and worry about.
-Zinc SSO is an addon to Zinc HTTP Components.
+
+Zinc SSO is an addon to [Zinc HTTP Components](http://zn.stfx.eu).
 
 *(Please note that Zinc-SSO is currently in development. This is alpha code.)*
 
@@ -20,8 +28,9 @@ See also [http://en.wikipedia.org/wiki/Oauth](http://en.wikipedia.org/wiki/Oauth
 
 ## Installation
 
-Zinc-SSO depends on Zinc-HTTP-Components and Zodiac and uses NeoJSON as well. 
-This is a Gofer load script for Pharo 2.0:
+Zinc-SSO depends on [Zinc HTTP Components](http://zn.stfx.eu) and 
+[Zodiac](http://zdc.stfx.eu) and uses [NeoJSON](http://stfx.eu/NeoJSON) as well. 
+This is a Gofer load script for [Pharo 2.0](http://www.pharo.st):
 
     Gofer it
       url: 'http://mc.stfx.eu/Neo';
@@ -42,7 +51,7 @@ This is a Gofer load script for Pharo 2.0:
       package: 'Zinc-SSO-OAuth2-Core';
       load.
 
-Since Zodiac is needed, you will need the SSL Plugin for your VM.
+Note that ince Zodiac is needed, you will need the SSL Plugin for your VM.
 
 ## OAuth Providers
 

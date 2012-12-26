@@ -48,6 +48,7 @@ This is a Gofer load script for [Pharo 2.0](http://www.pharo.st):
       package: 'Zinc-Character-Encoding-Core';
       package: 'Zinc-Resource-Meta-Core';
       package: 'Zinc-HTTP';
+      package: 'Zinc-SSO-OAuth1-Core';
       package: 'Zinc-SSO-OAuth2-Core';
       load.
 

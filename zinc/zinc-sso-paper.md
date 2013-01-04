@@ -117,20 +117,19 @@ requestToken and the oauth_verifier is needed to get the access token:
 
     handleOAuth1Callback: request
 
-	requestToken := self session at: 'oauth-req-token'
- 		ifAbsent:  [ self error: 'Invalid callback – no request token' ].
+       requestToken := self session at: 'oauth-req-token'
+              ifAbsent:  [ self error: 'Invalid callback – no request token' ].
 
-	
-	oauthToken := request uri queryAt: 'oauth_token'.
-	oauthVerifier := request uri queryAt: 'oauth_verifier'.
+       oauthToken := request uri queryAt: 'oauth_token'.
+       oauthVerifier := request uri queryAt: 'oauth_verifier'.
 
-	(oauthToken isNil or: [ oauthVerifier isNil])
-		ifTrue: [ self error: 'Invalid request' ].
+       (oauthToken isNil or: [ oauthVerifier isNil])
+              ifTrue: [ self error: 'Invalid request' ].
 
-	oauthToken = requestToken value
-		ifFalse: [ self error: 'Invalid request' ].
+       oauthToken = requestToken value
+              ifFalse: [ self error: 'Invalid request' ].
 
-	accessToken := self twitterOAuth1Service getAccessToken: requestToken verifier: oauthVerifier.
+       accessToken := self twitterOAuth1Service getAccessToken: requestToken verifier: oauthVerifier.
 
 Now we have an accessToken the requestToken is no longer needed. We can use the accessToken to retrieve
 information about the user. We can do that immediately and forget about the accessToken or we can store
@@ -141,10 +140,10 @@ The way to get information about the user is also service provider specific. Twi
 you use the verify_credentials API call to get basic user information. The class 
 ZnOAuth1TwitterUserAccess contains a method that wraps this Twitter API call.
 
-	userData := ZnOAuth1TwitterUserAccess new
-		oauth1Service: self twitterOAuth1Service ;
-		accessToken: accessToken ;
-		accountVerifyCredentials.
+   userData := ZnOAuth1TwitterUserAccess new
+       oauth1Service: self twitterOAuth1Service ;
+       accessToken: accessToken ;
+       accountVerifyCredentials.
 
 The #accountVerifyCredentials method answers a Dictionary with information about the user.
 See the [Twitter documentation](https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials)

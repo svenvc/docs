@@ -2,7 +2,7 @@
 
 *Sven Van Caekenberghe*
 
-*September 2012*
+*September 2012 - Updated January 2013*
 
 *(This is a draft)*
 
@@ -327,6 +327,18 @@ Server side handling of the setup is implemented in ZnWebSocketDelegate.
 Two exceptions, ZnWebSocketFailed and ZnWebSocketClosed 
 and a shared ZnWebSocketUtils class round out the core code.
 
+
+## Live Demo
+
+
+There is a live demo available with the basic Zinc-WebSocket demos: echo, status & chatroom.
+
+<http://websocket.stfx.eu>
+
+Have a look at ZnWebSocketDelegate class>>#installExamplesInServer: as a starting point to learn how this demo was set up.
+
+Setting up a production demo is complicated by the fact that most proxies and load balancers, most notable market leader Apache, do not (yet) deal correctly with the WebSocket protocol. It is thus easiest to organize things so that your client talk directly to your Smalltalk image.
+ 
 
 The implementation of Zinc WebSockets as an add-on to Zinc HTTP Components
 was made possible in part through financial backing by Andy Burnett of 

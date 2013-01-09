@@ -2,7 +2,7 @@
 
 *Jan van de Sandt & Sven Van Caekenberghe*
 
-*December 2012*
+*December 2012 - Updated Januari 2013*
 
 *(This is a draft)*
 
@@ -29,30 +29,19 @@ See also [http://en.wikipedia.org/wiki/Oauth](http://en.wikipedia.org/wiki/Oauth
 ## Installation
 
 Zinc-SSO depends on [Zinc HTTP Components](http://zn.stfx.eu) and 
-[Zodiac](http://zdc.stfx.eu) and uses [NeoJSON](http://stfx.eu/neojson) as well. 
-This is a Gofer load script for [Pharo 2.0](http://www.pharo.st):
-
-    Gofer it
-      url: 'http://mc.stfx.eu/Neo';
-      package: 'Neo-JSON-Core';
-      load.
-
-    Gofer it
-      url: 'http://mc.stfx.eu/Zodiac';
-      package: 'Zodiac-Core';
-      load.
+[Zodiac](http://zdc.stfx.eu) and uses [NeoJSON](http://stfx.eu/neojson)
+and XML Support as well. 
+The easiest way to load the code is by using ConfigurationOfZincHTTPComponents.
 
     Gofer it
       url: 'http://mc.stfx.eu/ZincHTTPComponents';
-      package: 'Zinc-FileSystem';
-      package: 'Zinc-Character-Encoding-Core';
-      package: 'Zinc-Resource-Meta-Core';
-      package: 'Zinc-HTTP';
-      package: 'Zinc-SSO-OAuth1-Core';
-      package: 'Zinc-SSO-OAuth2-Core';
+      package: 'ConfigurationOfZincHTTPComponents';
       load.
 
-Note that ince Zodiac is needed, you will need the SSL Plugin for your VM.
+    (ConfigurationOfZincHTTPComponents project version: '2.2') load: 'SSO'.
+
+Note that since Zodiac is needed, you will need the SSL Plugin for your VM.
+These dependencies are easiest resolved in Pharo 2.0.
 
 ## Zinc-SSO OAuth Support
 

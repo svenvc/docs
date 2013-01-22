@@ -20,7 +20,7 @@ you will be happy because you have less to implement and worry about.
 
 Zinc SSO is an addon to [Zinc HTTP Components](http://zn.stfx.eu).
 
-*(Please note that Zinc-SSO is currently in development. This is alpha code.)*
+*(Please note that Zinc-SSO is currently in development. This is beta code.)*
 
 # OAuth
 
@@ -38,10 +38,10 @@ The easiest way to load the code is by using ConfigurationOfZincHTTPComponents.
       package: 'ConfigurationOfZincHTTPComponents';
       load.
 
-    (ConfigurationOfZincHTTPComponents project version: '2.2') load: 'SSO'.
+    ConfigurationOfZincHTTPComponents project latestVersion load: 'SSO'.
 
 Note that since Zodiac is needed, you will need the SSL Plugin for your VM.
-These dependencies are easiest resolved in Pharo 2.0.
+The dependencies are easiest resolved in Pharo 2.0.
 
 ## Zinc-SSO OAuth Support
 
@@ -77,10 +77,10 @@ In Zinc-SSO the consumer key and secret are stored in a ZnOAuth1ConsumerData ins
 object also holds the urls for the required API calls. The url's for Twitter are hardcoded
 in a class method:
 
-	consumerData := ZnOAuth1ConsumerData newForTwitterAuthentication
-		consumer: 'YgnhZtjas8ccdVdyZ1QGBA';
-		consumerSecret: '--the-secret--';
-		yourself.
+    consumerData := ZnOAuth1ConsumerData newForTwitterAuthentication
+        consumer: 'YgnhZtjas8ccdVdyZ1QGBA';
+        consumerSecret: '--the-secret--';
+        yourself.
 
 Now you can put a “Signin with Twitter” button or link in your web application. In the code 
 that gets called you should perform the following steps:
@@ -89,11 +89,10 @@ Step 1: Get a request token – Before we can redirect the user to the Twitter s
 we need to get a request token. An important parameter for the API call to get this token
 is the callbackUrl. This is the url that the user will be redirected back to after the signin. 
 
-	service := ZnOAuth1Service new
-		providerAccount: consumerData ;
-
-		yourself.
-	requestToken := service getRequestTokenFor: 'http://my-domain/sso-callback'.
+    service := ZnOAuth1Service new
+        providerAccount: consumerData ;
+        yourself.
+    requestToken := service getRequestTokenFor: 'http://my-domain/sso-callback'.
 
 The #getRequestTokenFor: will create a signed OAuth request which includes your consumer 
 key and will send the request to Twitter. If all goes well Twitter will respond with a 
@@ -102,7 +101,7 @@ in our session. Later when the user is redirected back to our app we need this t
 
 Step 2: Redirect the user to the signin page of the service provider
 
-	redirectUrl := service loginUrlFor: requestToken
+    redirectUrl := service loginUrlFor: requestToken
 
 ZnOAuth1Service>>#loginUrl: will answer a ZnUrl object to which we should redirect the user.
 
@@ -139,10 +138,10 @@ The way to get information about the user is also service provider specific. Twi
 you use the verify_credentials API call to get basic user information. The class 
 ZnOAuth1TwitterUserAccess contains a method that wraps this Twitter API call.
 
-   userData := ZnOAuth1TwitterUserAccess new
-       oauth1Service: self twitterOAuth1Service ;
-       accessToken: accessToken ;
-       accountVerifyCredentials.
+    userData := ZnOAuth1TwitterUserAccess new
+        oauth1Service: self twitterOAuth1Service ;
+        accessToken: accessToken ;
+        accountVerifyCredentials.
 
 The #accountVerifyCredentials method answers a Dictionary with information about the user.
 See the [Twitter documentation](https://dev.twitter.com/docs/api/1.1/get/account/verify_credentials)
@@ -155,7 +154,7 @@ There are demos available for Google, Twitter, Microsoft and Facebook accounts.
 
 ## Demos
 
-Setting up OAuth takes some work, which why two online demos are available:
+Setting up OAuth and OpenID takes some work, which why two online demos are available:
 
 - [http://sso.stfx.eu] (http://sso.stfx.eu)
 - [http://sso.doit.st] (http://sso.doit.st)

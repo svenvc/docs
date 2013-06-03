@@ -11,8 +11,8 @@ I support some essential arithmetic.
 
 I have an efficient internal representation:
 
-  jnd - the julian day number <SmallInteger>
-	secs - the number of seconds since midnight, the beginning of the day <SmallInteger>
+- jnd - the julian day number <SmallInteger>
+- secs - the number of seconds since midnight, the beginning of the day <SmallInteger>
 
 Examples:
 
@@ -25,3 +25,13 @@ and can print a representation in arbitrary timezones.
 
 	(ZTimestamp fromString: DateAndTime now truncated printString) localPrintString.
   
+# Where ?
+
+Use ConfigurationOfZTimestamp in http://mc.stfx.eu/Neo to load me.
+
+# Related
+
+I come with a number of related tools: 
+ZTimestampFormat (example based date/time formatting and parsing), 
+ZTimestampSNTPClient and ZTimestampPreciseSNTPClient (check clock synchronization).
+

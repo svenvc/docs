@@ -154,7 +154,10 @@ Here are some examples of mappings:
 		mapping encoder: [ :dateAndTime | dateAndTime printString ] ].
 
 	mapper for: #ArrayOfPoints customDo: [ :mapping |
-		mapping listOfElementSchema: Point ].  
+		mapping listOfElementSchema: Point ].
+		
+	mapper for: #DictionaryOfPoints customDo: [ :mapping |
+		mapping mapWithValueSchema: Point ].
 
 	mapper for: ByteArray customDo: [ :mapping |
 		mapping listOfType: ByteArray ]
@@ -179,6 +182,13 @@ Here is a very simple case, reading a map as a point:
 
 Since JSON lacks a universal way to specify the class of an object/map, 
 we have to specify the target schema that we want to use as an argument to #nextAs:.
+
+With custom mappings, it is possible to 
+- define the schema of the elements of a list
+- define the schema of the elements of a list as well as the class of the list
+- define the schema of the values of a map
+In fact, NeoJSONCustomMapping can be extended to implement even more specialized mappings.
+ 
 Finally, here is a more complex example, reading a list of maps as an array of points:
 
 	(NeoJSONReader on: '[ { "x" : 1, "y" : 2 }, { "x" : 3, "y" : 4 } ]' readStream)

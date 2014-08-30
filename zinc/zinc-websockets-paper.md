@@ -303,7 +303,7 @@ Vist any of the following URLs:
 
 - <http://localhost:1701/ws-echo-client>
 - <http://localhost:1701/ws-status-client>
-- <http://localhost:1701/ws-chat-client>
+- <http://localhost:1701/ws-chatroom-client>
 
 Inside your Smalltalk image, you can also send chat messages, much like a moderator:
 

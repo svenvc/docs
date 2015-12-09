@@ -87,9 +87,12 @@ There are different normalization forms, NFC, NFD, NFKC and NFKD, each with spec
 NeoUnicodeNormalizer is a first and simplified implementation of this operation.
 
     NeoUnicodeNormalizer new decomposeString: 'les élèves Français'.
-    NeoUnicodeNormalizer new composeString: 'les élèves Français'.
+    NeoUnicodeNormalizer new composeString: 'les e´le`ves Franc ̧is'.
     NeoUnicodeNormalizer new decomposeString: 'Düsseldorf Königsallee'.
-    NeoUnicodeNormalizer new composeString: 'Düsseldorf Königsallee'.
+    NeoUnicodeNormalizer new composeString: 'Du¨sseldorf Ko¨nigsallee'.
+
+(Note: copy/paste of the above decomposed strings won't work,
+generate the decomposed strings yourself in Pharo using #decomposeString:)
 
 
 ## Casing

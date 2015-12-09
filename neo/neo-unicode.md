@@ -34,17 +34,31 @@ In particular, we need to support normalization, casing and collation/sorting.
 ## The Unicode Character Database
 
 A first step for better Unicode support is to work with the actual data defined by the standard.
-The primary element is the Unicode Character Database, which lists details about each of about 30.000 code points.
+The main element is the Unicode Character Database, which lists details for each of approximately 30.000 code points.
 
-NeoUnicodeCharacterData holds this information per code point, 
-loading the database in Pharo from an external URL.
+NeoUnicodeCharacterData holds this information per code point.
+The database is loaded in Pharo from an external URL, on demand and then cached.
+
+    NeoUnicodeCharacterData database
+    
+An extension method provides access to this data from a character.
+
+    $é unicodeCharacterData.
+    $e unicodeCharacterData.
+    $1 unicodeCharacterData.
+
+A GT Inspector extension helps in interpreting this data, 
+as it is stored in a way that favours compactness more than readability.
+
+See the class and method comments, as well as the unit tests for more information.
+Obviously, correctly interpreting all these properties is very complex.
 
 
 ## Normalization
 
 Some characters or letters can be written in more than one way.
 
-The simplest example in a common language is (the French letter é) is
+The simplest example in a common language (the French letter é) is
 
     LATIN SMALL LETTER E WITH ACUTE [U+00E9]
 
@@ -53,7 +67,29 @@ which can also be written as
     LATIN SMALL LETTER E [U+0065] followed by COMBINING ACUTE ACCENT [U+0301]
 
 The former being a composed normal form, the latter a decomposed normal form. 
-There are different normalization forms, NFC, NFD, NFKC and NFKD.
+
+Not only diacritical marks (accents) lead to two representations, various special characters might do too.
+For example, the ellipsis character of 3 dots can be considered, under a certain interpretation, 
+to be equivalent to 3 separate dots in a row.
+
+    HORIZONTAL ELLIPSIS [U+2026]
+    FULL STOP [U+002E] followed by FULL STOP [U+002E] followed by FULL STOP [U+002E]
+
+Some characters have more than 2 representations. The Ångström symbol Å can be written in 3 ways !
+
+    ANGSTROM SIGN [U+212B]
+    LATIN CAPITAL LETTER A WITH RING ABOVE [U+00C5]
+    LATIN CAPITAL LETTER A [U+0041] followed by COMBINING RING ABOVE [U+030A]
+
+Normalization is needed to properly compare strings.
+There are different normalization forms, NFC, NFD, NFKC and NFKD, each with specific rules.
+
+NeoUnicodeNormalizer is a first and simplified implementation of this operation.
+
+    NeoUnicodeNormalizer new decomposeString: 'les élèves Français'.
+    NeoUnicodeNormalizer new composeString: 'les élèves Français'.
+    NeoUnicodeNormalizer new decomposeString: 'Düsseldorf Königsallee'.
+    NeoUnicodeNormalizer new composeString: 'Düsseldorf Königsallee'.
 
 
 ## Casing
@@ -63,7 +99,9 @@ The Unicode Character Database can be used for these operations.
 
 NeoUnicodeCaser is a simple tool to do these conversions.
 
-
+    NeoUnicodeCaser new case: #uppercase string: 'abc'.
+    NeoUnicodeCaser new case: #lowercase string: 'ABC'.
+    NeoUnicodeCaser new case: #titlecase string: 'abc'.
 
 
 ## Collation/Sorting

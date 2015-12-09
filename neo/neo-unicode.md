@@ -134,6 +134,7 @@ This could probably be optimized in the future.
 
 Some links to useful documents:
 - ftp://ftp.unicode.org/Public/3.0-Update/UnicodeCharacterDatabase-3.0.0.html
+- http://unicode.org/faq/normalization.html
 - http://www.unicode.org/reports/tr44/
 - http://blog.golang.org/strings
 - http://blog.golang.org/normalization

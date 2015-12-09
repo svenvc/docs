@@ -116,3 +116,15 @@ using the Unicode Character Database.
 ## Collation/Sorting
 
 Nothing yet.
+
+
+## Legacy Notes
+
+The current **Unicode** class seems to be capable of reading an older version of UnicodeData.txt 
+but uses it only for casing.
+
+The current **CombinedChar** class seems to be capable of reading an older version of UnicodeData.txt 
+but uses it only combining composable characters.
+
+Neither holds on to the database as it is pretty big, but they do hold onto quite some data. 
+This could probably be optimized in the future.

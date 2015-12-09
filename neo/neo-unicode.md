@@ -37,7 +37,7 @@ A first step for better Unicode support is to work with the actual data defined 
 The main element is the Unicode Character Database, which lists details for each of approximately 30.000 code points.
 
 NeoUnicodeCharacterData holds this information per code point.
-The database is loaded in Pharo from an external URL, on demand and then cached.
+The database is loaded in Pharo from an external URL, on demand, and then cached.
 
     NeoUnicodeCharacterData database
     

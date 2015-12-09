@@ -7,6 +7,8 @@ This is a work in progress that is not yet suitable for public consumption.
 The project consists of 2 packages, Neo-Unicode-Core and Neo-Unicode-Tests
 in the http://mc.stfx.eu/Neo repository. There is no Metacello configuration.
 
+_Sven Van Caekenberghe (December 2015)_
+
 
 ## The current situation
 
@@ -36,7 +38,7 @@ In particular, we need to support normalization, casing and collation/sorting.
 A first step for better Unicode support is to work with the actual data defined by the standard.
 The main element is the Unicode Character Database, which lists details for each of approximately 30.000 code points.
 
-NeoUnicodeCharacterData holds this information per code point.
+**NeoUnicodeCharacterData** holds this information per code point.
 The database is loaded in Pharo from an external URL, on demand, and then cached.
 
     NeoUnicodeCharacterData database
@@ -86,7 +88,8 @@ Some characters have more than 2 representations. The Ångström symbol Å can b
 Normalization is needed to properly compare strings.
 There are different normalization forms, NFC, NFD, NFKC and NFKD, each with specific rules.
 
-NeoUnicodeNormalizer is a first and simplified implementation of this operation.
+**NeoUnicodeNormalizer** is a first and simplified implementation of this operation,
+using the Unicode Character Database.
 
     NeoUnicodeNormalizer new decomposeString: 'les élèves Français'.
     NeoUnicodeNormalizer new composeString: 'les e´le`ves Franc ̧is'.
@@ -102,7 +105,8 @@ generate the decomposed strings yourself in Pharo using #decomposeString:)
 Recognizing lower, upper and title case and converting between them is defined by Unicode as well.
 The Unicode Character Database can be used for these operations.
 
-NeoUnicodeCaser is a simple tool to do these conversions.
+**NeoUnicodeCaser** is a simple tool to do these conversions,
+using the Unicode Character Database.
 
     NeoUnicodeCaser new case: #uppercase string: 'abc'.
     NeoUnicodeCaser new case: #lowercase string: 'ABC'.

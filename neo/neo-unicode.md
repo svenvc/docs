@@ -128,3 +128,15 @@ but uses it only combining composable characters.
 
 Neither holds on to the database as it is pretty big, but they do hold onto quite some data. 
 This could probably be optimized in the future.
+
+
+## References
+
+ftp://ftp.unicode.org/Public/3.0-Update/UnicodeCharacterDatabase-3.0.0.html
+http://www.unicode.org/reports/tr44/
+http://blog.golang.org/strings
+http://blog.golang.org/normalization
+http://docs.oracle.com/javase/7/docs/api/java/text/Normalizer.html
+
+
+

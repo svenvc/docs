@@ -50,6 +50,8 @@ An extension method provides access to this data from a character.
 A GT Inspector extension helps in interpreting this data, 
 as it is stored in a way that favours compactness more than readability.
 
+![Image](https://raw.githubusercontent.com/svenvc/docs/master/neo/custom-ucd-inspector.png)
+
 See the class and method comments, as well as the unit tests for more information.
 Obviously, correctly interpreting all these properties is very complex.
 

@@ -133,12 +133,16 @@ This could probably be optimized in the future.
 ## References
 
 Some links to useful documents:
+- http://www.unicode.org/Public/UNIDATA/
+- http://www.unicode.org/reports/tr15/
+- http://www.unicode.org/versions/Unicode8.0.0/ch03.pdf (3.11)
 - ftp://ftp.unicode.org/Public/3.0-Update/UnicodeCharacterDatabase-3.0.0.html
 - http://unicode.org/faq/normalization.html
 - http://www.unicode.org/reports/tr44/
 - http://blog.golang.org/strings
 - http://blog.golang.org/normalization
 - http://docs.oracle.com/javase/7/docs/api/java/text/Normalizer.html
+- Swift String
 
 
 

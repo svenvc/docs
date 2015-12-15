@@ -142,7 +142,9 @@ Some links to useful documents:
 - http://blog.golang.org/strings
 - http://blog.golang.org/normalization
 - http://docs.oracle.com/javase/7/docs/api/java/text/Normalizer.html
-- Swift String
+- https://developer.apple.com/swift/blog/?id=30
+- http://useyourloaf.com/blog/swift-string-cheat-sheet.html
+- https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html
 
 
 

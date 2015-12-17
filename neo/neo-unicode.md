@@ -145,6 +145,7 @@ Some links to useful documents:
 - https://developer.apple.com/swift/blog/?id=30
 - http://useyourloaf.com/blog/swift-string-cheat-sheet.html
 - https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html
+- https://www.mikeash.com/pyblog/friday-qa-2015-11-06-why-is-swifts-string-api-so-hard.html
 
 
 

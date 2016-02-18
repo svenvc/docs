@@ -146,6 +146,10 @@ Some links to useful documents:
 - http://useyourloaf.com/blog/swift-string-cheat-sheet.html
 - https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html
 - https://www.mikeash.com/pyblog/friday-qa-2015-11-06-why-is-swifts-string-api-so-hard.html
+- http://graphemica.com/
+- http://www.charbase.com
+- http://www.fileformat.info/info/unicode/index.htm
+- https://www.azabani.com/pages/gbu/
 
 
 

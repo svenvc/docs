@@ -54,7 +54,7 @@ permission to create new Tweets for a user. In this case you can do a lot more t
 Currently there are two versions of OAuth in active use. Version 1.0a and version 2.0, see [wikipedia]
 (http://en.wikipedia.org/wiki/OAuth)
 for a list of OAuth service providers and the versions they support. The two versions offer the same 
-kind of functionality buy are technically very different. Version 2.0 is really simple to use and just 
+kind of functionality but are technically very different. Version 2.0 is really simple to use and just 
 relies on https for security. Version 1.0a is more complex and uses a digital signature to verify the 
 integrity of a http request. 
 

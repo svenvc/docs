@@ -77,7 +77,9 @@ The code implementing Zinc WebSockets resides in a single package called 'Zinc-W
 Zinc HTTP Components repositories. There is also an accompanying 'Zinc-WebSocket-Tests' package
 containing the unit tests. The ConfigurationOfZincHTTPComponents has a group called 'WebSocket' that 
 you can load separately.
-
+```Smalltalk
+ConfigurationOfZincHTTPComponents project latestVersion load: 'WebSocket'
+```
 
 ## Using Client Side WebSockets
 

@@ -7,7 +7,7 @@
 *(This is a draft)*
 
 
-The WebSokect protocol defines a full-duplex single socket connection 
+The WebSocket protocol defines a full-duplex single socket connection 
 over which messages can be sent between a client and a server.
 It simplifies much of the complexity around bi-directional web communication and connection management.
 WebSocket represents the next evolutionary step in web communication compared to Comet and Ajax.

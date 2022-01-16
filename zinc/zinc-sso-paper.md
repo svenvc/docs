@@ -43,6 +43,14 @@ The easiest way to load the code is by using ConfigurationOfZincHTTPComponents.
 Note that since Zodiac is needed, you will need the SSL Plugin for your VM.
 The dependencies are easiest resolved in Pharo 2.0.
 
+For Pharo 8 use...
+```
+Metacello new
+  repository: 'github://svenvc/zinc/repository';
+  baseline: 'ZincHTTPComponents';
+  load: 'SSO'.
+```
+
 ## Zinc-SSO OAuth Support
 
 With OAuth an application can ask a user permission to access the user's data on a third party system. 
